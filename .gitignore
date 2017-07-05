@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+.idea/
+templates/
+
+### Django ###
+*.pyc
+db.sqlite3
