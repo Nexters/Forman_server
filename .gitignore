@@ -55,7 +55,7 @@ coverage.xml
 local_settings.py
 
 # Flask stuff:
-instance/
+instance/m
 .webassets-cache
 
 # Scrapy stuff:
@@ -105,3 +105,4 @@ templates/
 ### Django ###
 *.pyc
 db.sqlite3
+settings_secret.py
