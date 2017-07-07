@@ -105,4 +105,4 @@ templates/
 ### Django ###
 *.pyc
 db.sqlite3
-settings_secret.py
+my.cnf
