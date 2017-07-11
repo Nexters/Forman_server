@@ -8,8 +8,7 @@ from .models import Apiconfig
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
-def kml(request) :
-
+def kml(request):
     # 데이터 저장
     endX = request.GET.get('endX', "empty")
     endY = request.GET.get('endY', "empty")
@@ -23,24 +22,23 @@ def kml(request) :
     }
 
     # 파라미터 설정
-    #requestParam = {
+    # requestParam = {
     #    'version': '1',  # tmap api version, 1
-    #}
+    # }
 
     # 페이로드 설정
     payload = {
         'startX': startX,
         'startY': startY,
-        'endX' : endX,
-        'endY' : endY,
-        'reqCoordType' : 'WGS84GEO',
-        'resCoordType' : 'WGS84GEO'
+        'endX': endX,
+        'endY': endY,
+        'reqCoordType': 'WGS84GEO',
+        'resCoordType': 'WGS84GEO'
     }
 
     # 요청 URL
-    requestUrl = "https://apis.skplanetx.com/tmap/routes?version=1"
+    request_url = "https://apis.skplanetx.com/tmap/routes?version=1"
 
     # 응답 객체
-    response = requests.post(requestUrl, data=payload, headers=headers)
-
+    response = requests.post(request_url, params=payload, headers=headers)
     return Response(response.json())
