@@ -3,6 +3,7 @@ import requests
 from rest_framework import status, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from .models import Apiconfig
 
 
 #######################################################################################################################
@@ -26,34 +27,33 @@ from rest_framework.response import Response
 #######################################################################################################################
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
-def geoCoding(request) :
-
+def geoCoding(request):
     # 파라미터 저장
-    #version = request.GET.get('version', "1")
+    # version = request.GET.get('version', "1")
     city_do = request.GET.get('city_do', "empty")
-    gu_gun = request.GET.get('gu_gun',"empty")
+    gu_gun = request.GET.get('gu_gun', "empty")
     dong = request.GET.get('dong', 'empty')
     bunji = request.GET.get('bunji', 'empty')
     detailAddress = request.GET.get('detailAddress', 'empty')
-    #addressFlag = request.GET.get('addressFlag', 'F02')
-    #coordType = request.GET.get('coordType', 'WGS84GEO')
+    # addressFlag = request.GET.get('addressFlag', 'F02')
+    # coordType = request.GET.get('coordType', 'WGS84GEO')
 
     # 헤더 설정
     headers = {
-        'Content-Type':'application/json' ,
-        'appKey': 'a5e53944-8c8b-37e1-91e9-dc812cbf24e4'
+        'Content-Type': 'application/json',
+        'appKey': Apiconfig.objects.filter(name='tmap', type=0)[0].token,  # 향후 모듈화 시킨다
     }
 
     # 파라미터 설정
     requestParam = {
-                'version': '1',  # tmap api version, 1
-                'city_do': city_do,  # 시/도 명칭
-                'gu_gun': gu_gun,  # 구/군 명칭
-                'dong': dong,  # F01-동 명칭, F02-도로명 명칭
-                'bunji' : bunji , # 출력 좌표에 해당하는 지번
-                'detailAddress' : detailAddress , # 상세 주소
-                'addressFlag' : 'F02' , # F01-지번주소타입, F02-새주소타입
-                'coordType' : 'WGS84GEO' , # 좌표 타입, 위도경도 > WGS84GEO
+        'version': '1',  # tmap api version, 1
+        'city_do': city_do,  # 시/도 명칭
+        'gu_gun': gu_gun,  # 구/군 명칭
+        'dong': dong,  # F01-동 명칭, F02-도로명 명칭
+        'bunji': bunji,  # 출력 좌표에 해당하는 지번
+        'detailAddress': detailAddress,  # 상세 주소
+        'addressFlag': 'F02',  # F01-지번주소타입, F02-새주소타입
+        'coordType': 'WGS84GEO',  # 좌표 타입, 위도경도 > WGS84GEO
     }
 
     # 요청 URL
@@ -62,6 +62,9 @@ def geoCoding(request) :
     # 응답 객체
     response = requests.get(requestUrl, headers=headers, params=requestParam)
 
-    #print("STATUS : " + str(response.status_code))
+    data = response.json()
+    print(data['coordinateInfo']['addressFlag'])
+
+    # print("STATUS : " + str(response.status_code))
 
     return Response(response.json())
