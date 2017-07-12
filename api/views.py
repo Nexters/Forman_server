@@ -3,6 +3,8 @@ import requests
 from rest_framework import status, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from xmljson import parker
+from xml.etree.ElementTree import fromstring
 from .models import Apiconfig
 
 
@@ -42,3 +44,20 @@ def kml(request):
     # 응답 객체
     response = requests.post(request_url, params=payload, headers=headers)
     return Response(response.json())
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def experessBusTerminal(request):
+    terminal_name = request.GET.get("tmNm", None)
+
+    params = {
+        'serviceKey': Apiconfig.objects.filter(name='open', type=0)[0].token,  # 향후 모듈화 시킨다
+        'tmnNm': terminal_name
+    }
+
+    request_url = 'http://openapi.tago.go.kr/openapi/service/ExpBusArrInfoService/getExpBusTmnList'
+
+    response = requests.get(url=request_url, params=params)
+
+    print(response.content)
+    return Response(parker.data(fromstring(response.content)))
