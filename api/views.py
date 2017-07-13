@@ -5,8 +5,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from xmljson import parker
 from xml.etree.ElementTree import fromstring
-from .models import Apiconfig
-
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
@@ -20,7 +18,7 @@ def kml(request):
     # 헤더 설정
     headers = {
         'Content-Type': 'application/json',
-        'appKey': Apiconfig.objects.filter(name='tmap', type=0)[0].token,  # 향후 모듈화 시킨다
+        'appKey': '',
     }
 
     # 파라미터 설정
@@ -51,7 +49,7 @@ def experessBusTerminal(request):
     terminal_name = request.GET.get("tmNm", None)
 
     params = {
-        'serviceKey': Apiconfig.objects.filter(name='open', type=0)[0].token,  # 향후 모듈화 시킨다
+        'serviceKey': '',
         'tmnNm': terminal_name
     }
 
