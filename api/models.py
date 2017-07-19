@@ -11,7 +11,7 @@ ValueType = (
 
 # API 기본 세팅
 class Api(models.Model):
-    name = models.TextField(max_length=100, verbose_name='API 이름', primary_key=True)
+    name = models.CharField(max_length=100, verbose_name='API 이름', primary_key=True)
     desc = models.TextField(verbose_name='설명')
     useYN = models.BooleanField(default=True, verbose_name='사용여부')
 
@@ -47,7 +47,7 @@ class ApiToken(models.Model):
 
 class ApiHeader(models.Model):
     api = models.ForeignKey(Api)
-    key = models.TextField(verbose_name='키', primary_key=True)
+    key = models.CharField(max_length=100, verbose_name='키', primary_key=True)
     valueType = models.SmallIntegerField(choices=ValueType, verbose_name='값 종류')
     value = models.TextField(verbose_name='값')
     memo = models.TextField(verbose_name='메모')
@@ -71,7 +71,7 @@ class ApiService(models.Model):
     )
 
     api = models.ForeignKey(Api)
-    name = models.TextField(max_length=100, verbose_name='이름', primary_key=True)
+    name = models.CharField(max_length=100, verbose_name='이름', primary_key=True)
     desc = models.TextField(verbose_name='설명')
     useYN = models.BooleanField(default=True, verbose_name='사용 여부')
     resType = models.SmallIntegerField(choices=ResponseType, verbose_name='응답형식',
@@ -97,7 +97,7 @@ class ApiServiceParams(models.Model):
     )
 
     api = models.ForeignKey(ApiService)
-    key = models.TextField(verbose_name='키', primary_key=True)
+    key = models.CharField(max_length=100, verbose_name='키', primary_key=True)
     valueType = models.SmallIntegerField(choices=ValueType, verbose_name='값 종류')
     valueInputType = models.SmallIntegerField(choices=ValueInputType, verbose_name='값 입력 방식')
     value = models.TextField(verbose_name='값')

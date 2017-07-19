@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin, TabularInline, StackedInline
 from django.forms import ModelForm, TextInput, NumberInput, DateTimeInput, DateInput, CheckboxInput
-from .models import Api, ApiHeader, ApiToken
+from .models import Api, ApiHeader, ApiToken, ApiService
 from .form import ApiTokenForm
 
 # Register your models here.
@@ -40,3 +40,4 @@ class ApiAdmin(ModelAdmin):
 
 
 admin.site.register(Api, ApiAdmin)
+admin.site.register(ApiService)

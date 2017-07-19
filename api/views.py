@@ -5,6 +5,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from xmljson import parker
 from xml.etree.ElementTree import fromstring
+from django.forms.models import model_to_dict
+from django.shortcuts import get_object_or_404
+
+from .models import ApiService
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
@@ -41,6 +45,8 @@ def kml(request):
 
     # 응답 객체
     response = requests.post(request_url, params=payload, headers=headers)
+    print(response.content)
+    print(response.status_code)
     return Response(response.json())
 
 @api_view(['GET'])
@@ -59,3 +65,10 @@ def experessBusTerminal(request):
 
     print(response.content)
     return Response(parker.data(fromstring(response.content)))
+
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def api_execute(request, api, service):
+    api_service = get_object_or_404(ApiService, name=service, api__name=api, useYN=True)
+    return Response(model_to_dict(api_service))
