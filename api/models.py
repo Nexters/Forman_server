@@ -33,6 +33,9 @@ class Api(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = verbose_name_plural = 'API'
+
 #API 기본 파라미터
 class ApiParams(models.Model):
     api = models.ForeignKey(Api)
