@@ -36,7 +36,6 @@ class ApiHeaderForm(ModelForm):
         fields = ('key', 'valueType', 'value', 'memo')
         widgets = {
             'key': TextInput,
-            'valueType': SelectMultiple,
             'memo': TextInput,
             'value': AutosizedTextarea,
         }
@@ -56,10 +55,10 @@ class ApiServiceParamsForm(ModelForm):
         widgets = {
             'key': TextInput(attrs={'style': 'width:80px;', }),
             'value': TextInput(attrs={'style': 'width:100px;', }),
-            'valueType': SelectMultiple(attrs={'style': 'width:90px'}),
+            'valueType': Select(attrs={'style': 'width:90px'}),
             'memo': AutosizedTextarea,
-            'reqMethod': SelectMultiple(attrs={'style': 'width:60ox'}),
-            'valueInputType': SelectMultiple(attrs={'style': 'width:60ox'}),
+            'reqMethod': Select(attrs={'style': 'width:60ox'}),
+            'valueInputType': Select(attrs={'style': 'width:60ox'}),
         }
 
 class ApiServiceAdminForm(ModelForm):
@@ -68,5 +67,4 @@ class ApiServiceAdminForm(ModelForm):
             'name': TextInput,
             'desc': TextInput,
             'useYN': CheckboxInput,
-            'resType': SelectMultiple,
         }
