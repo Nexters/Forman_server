@@ -100,8 +100,8 @@ class ApiService(models.Model):
     )
 
     api = models.ForeignKey(Api)
-    name = models.CharField(max_length=100, verbose_name='이름', primary_key=True)
-    desc = models.TextField(verbose_name='설명')
+    name = models.CharField(max_length=100, verbose_name='서비스 ID', primary_key=True)
+    desc = models.TextField(verbose_name='서비스명')
     useYN = models.BooleanField(default=True, verbose_name='사용 여부')
     resType = models.SmallIntegerField(choices=ResponseType, verbose_name='응답형식',
                                        help_text='응답하는 형식에 따라 데이터 변환을 해준다', default=0)
