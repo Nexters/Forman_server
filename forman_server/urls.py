@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/3rd/', include('api.urls'))
+    #나의 브랜치에 커밋을 할께요!!
 ]
