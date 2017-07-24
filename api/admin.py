@@ -56,7 +56,7 @@ class ApiServicePramsInlines(TabularInline):
 class ApiServiceAdmin(ModelAdmin):
     fieldsets = ((None, {
         'classes': ('suit-tab suit-tab-general',),
-        'fields': ('name', 'desc', 'resType', 'useYN',)
+        'fields': ('name', 'desc', 'reqUrl', 'resType', 'useYN',)
     }),)
     list_display = ('get_api_desc', 'desc', 'name', 'resType', 'useYN',)
     list_filter = ('api', )
