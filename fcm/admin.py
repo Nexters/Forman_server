@@ -10,7 +10,7 @@ class FcmAdmin(ModelAdmin):
 admin.site.register(Fcm, FcmAdmin)
 
 class FcmMessageHistoryAdmin(ModelAdmin):
-    list_display = ('id', 'receiver', 'sentData', 'sentDate', 'resultCode', 'resultMsg', )
+    list_display = ('id', 'receiver', 'sentData', 'sentDate', 'resultMsg', )
 
     # def has_add_permission(self, request):
     #     return False

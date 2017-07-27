@@ -20,7 +20,7 @@ class FcmMessageHistory(models.Model):
     receiver = models.ForeignKey(Fcm, verbose_name="수신자", on_delete=models.CASCADE)
     sentData = models.TextField(verbose_name="전송 데이터")
     sentDate = models.DateTimeField(default=timezone.now, verbose_name="전송 날짜")
-    resultCode = models.SmallIntegerField(verbose_name="결과 코드")
+    # resultCode = models.SmallIntegerField(verbose_name="결과 코드")
     resultMsg = models.TextField(verbose_name="결과 메세지")
 
     class Meta:
