@@ -1,11 +1,11 @@
 from django.http import Http404
 from pyfcm import FCMNotification
-from requests import Response
+from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
-from .models import Fcm, FcmMessageHistory
+from .models import FcmUsers, FcmMessageHistory
 from django.contrib.auth.models import User
-
+import json
 
 # 이슈
 ## 성공, FCM 전송 테스트하기
@@ -24,7 +24,7 @@ data_message = {
 
 # test user
 user = User.objects.filter(username='admin')
-fcmUser = Fcm.objects.filter(user= user)[0]
+fcmUser = FcmUsers.objects.filter(user= user)[0]
 token = fcmUser.token
 flag = fcmUser.useYN
 
@@ -52,11 +52,7 @@ def sendMessages_test(request):
     try:
         saveFcmHistory(fcmUser, data_message, result_message)
 
-    except Fcm.DoesNotExist:
-        saveFcmHistory(fcmUser, data_message, result_message)
-        raise Http404("존재하지 않는 FCM 토큰입니다.")
-
-    except IndexError:
+    except Fcm.DoesNotExist | IndexError:
         saveFcmHistory(fcmUser, data_message, result_message)
         raise Http404("존재하지 않는 FCM 토큰입니다.")
 
@@ -81,6 +77,5 @@ def saveFcmHistory(fcmUser, data, resultMsg):
     history = FcmMessageHistory()
     history.receiver = fcmUser
     history.sentData = data
-    #history.resultCode = resultCode
     history.resultMsg = resultMsg
     history.save()
