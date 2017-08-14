@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
 
-class FcmUsers(models.Model):
+class Fcm(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name = '사용자')
     token = models.CharField(max_length=300, verbose_name = 'FCM 토큰')
     useYN = models.BooleanField(default=True, verbose_name='알림 허용')
@@ -17,7 +17,7 @@ class FcmUsers(models.Model):
 
 
 class FcmMessageHistory(models.Model):
-    receiver = models.ForeignKey(FcmUsers, verbose_name="수신자", on_delete=models.CASCADE)
+    receiver = models.ForeignKey(Fcm, verbose_name="수신자", on_delete=models.CASCADE)
     sentData = models.TextField(verbose_name="전송 데이터")
     sentDate = models.DateTimeField(default=timezone.now, verbose_name="전송 날짜")
     resultMsg = models.TextField(verbose_name="결과 메세지")

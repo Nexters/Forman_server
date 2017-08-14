@@ -27,11 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '10.33.8.30']
 
-
-# Application definition
-
 INSTALLED_APPS = [
-    'suit',
+    'suit', # admin side menu bar, admin보다 항상 위에 배치.
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'forman.apps.FormanConfig',
-    'api.apps.ApiConfig',
+    'forman',
+    'api',
+    'fcm',
+    'routine'
 ]
 
 MIDDLEWARE = [
@@ -99,7 +98,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
-            'read_default_file': os.path.join(BASE_DIR, 'my.cnf'),
+            'read_default_file': 'D:\\my.cnf',
         },
     }
 }

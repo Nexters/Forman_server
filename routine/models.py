@@ -15,6 +15,12 @@ class Group(models.Model):
     type = models.SmallIntegerField(verbose_name='종류', choices=type_name)
     link = models.TextField(verbose_name='링크', max_length=400)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = verbose_name_plural = '그룹'
+
 
 # 그룹 유저
 class GroupUsers(models.Model):
@@ -25,6 +31,12 @@ class GroupUsers(models.Model):
     group = models.OneToOneField(Group, on_delete=models.CASCADE, verbose_name="그룹")
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name = '사용자')
     type = models.SmallIntegerField(verbose_name='권한', choices=type_name)
+
+    def __str__(self):
+        return self.group.user.username
+
+    class Meta:
+        verbose_name = verbose_name_plural = '그룹 User'
 
 
 # 일정
@@ -42,6 +54,7 @@ class Schedule(models.Model):
         (1, 'ON'),
     )
     group = models.ForeignKey(Group, verbose_name='그룹', on_delete=models.CASCADE)
+    registrant = models.OneToOneField(User, verbose_name="등록자", on_delete=models.CASCADE)
     object = models.SmallIntegerField(verbose_name='목적', choices=object_choice)
     type = models.SmallIntegerField(verbose_name='종류', choices=type_choice)
     departure = models.TextField(verbose_name="출발지", max_length=30)
@@ -49,6 +62,12 @@ class Schedule(models.Model):
     arrival = models.TextField(verbose_name="도착지", max_length=30)
     arrivalTime = models.DateTimeField(verbose_name='도착 시간')
     realTimeLocation = models.SmallIntegerField(verbose_name="GPS", choices=realTimeLocation_choice, default=0)
+
+    def __str__(self):
+        return self.departure
+
+    class Meta:
+        verbose_name = verbose_name_plural = '일정'
 
 
 # 루틴
@@ -66,3 +85,9 @@ class Routine(models.Model):
     arrivalTime = models.DateTimeField(verbose_name='도착 시간')
     distance = models.IntegerField(verbose_name="거리")
     flight_no = models.TextField(verbose_name="편명", null=True)
+
+    def __str__(self):
+        return self.departure
+
+    class Meta:
+        verbose_name = verbose_name_plural = '경로'

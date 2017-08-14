@@ -43,8 +43,8 @@ class ApiAdmin(ModelAdmin):
     inlines = [ApiHeaderInlines, ApiTokenInlines, ApiPramsInlines, ApiServiceInlines]
     form = ApiAdminForm
 
-
 admin.site.register(Api, ApiAdmin)
+
 
 class ApiServicePramsInlines(TabularInline):
     model = ApiServiceParams

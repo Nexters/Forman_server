@@ -3,7 +3,7 @@ from pyfcm import FCMNotification
 from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
-from .models import FcmUsers, FcmMessageHistory
+from .models import Fcm, FcmMessageHistory
 from django.contrib.auth.models import User
 import json
 
@@ -23,42 +23,42 @@ data_message = {
 }
 
 # test user
-user = User.objects.filter(username='admin')
-fcmUser = FcmUsers.objects.filter(user= user)[0]
-token = fcmUser.token
-flag = fcmUser.useYN
+# user = User.objects.filter(username='admin')
+# fcmUser = Fcm.objects.filter(user= user)[0]
+# token = fcmUser.token
+# flag = fcmUser.useYN
 
 # test api
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
 def sendMessages_test(request):
-
-    # fcm_flag = Fcm.objects.filter(token=token)['useYN']
-    # if fcm_flag: (True일 때 아래와 같은 로직 수행)
-    if flag:
-        result = push_service.notify_single_device(
-            registration_id = token,
-            data_message = data_message,
-        )
-
-    success = result['success']
-    if success == 1:
-        result_message = 'Success'
-    else:
-        result_message = result['results'][0]['error']
-
-    print(result_message)
-
-    try:
-        saveFcmHistory(fcmUser, data_message, result_message)
-
-    except Fcm.DoesNotExist | IndexError:
-        saveFcmHistory(fcmUser, data_message, result_message)
-        raise Http404("존재하지 않는 FCM 토큰입니다.")
-
-    print(result)
-
-    return Response(result)
+    return request
+    # # fcm_flag = Fcm.objects.filter(token=token)['useYN']
+    # # if fcm_flag: (True일 때 아래와 같은 로직 수행)
+    # if flag:
+    #     result = push_service.notify_single_device(
+    #         registration_id = token,
+    #         data_message = data_message,
+    #     )
+    #
+    # success = result['success']
+    # if success == 1:
+    #     result_message = 'Success'
+    # else:
+    #     result_message = result['results'][0]['error']
+    #
+    # print(result_message)
+    #
+    # try:
+    #     saveFcmHistory(fcmUser, data_message, result_message)
+    #
+    # except Fcm.DoesNotExist | IndexError:
+    #     saveFcmHistory(fcmUser, data_message, result_message)
+    #     raise Http404("존재하지 않는 FCM 토큰입니다.")
+    #
+    # print(result)
+    #
+    # return Response(result)
 
 ########################################################################################################################
 
